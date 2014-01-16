@@ -1,5 +1,5 @@
 #pragma once
-#include <Arduino.h>
+#include <stdint.h>
 #include <avr/pgmspace.h>
 
 #include "Stream.h"
@@ -25,7 +25,7 @@ namespace MLP
     void (*m_Callback)(CommandParameter &rParameters);
   };
 
-  template <int MAX_COMMANDS = 10, int SERIAL_BUFFER_SIZE = 30> class CommandParser
+  template <int MAX_COMMANDS = 10, int CP_SERIAL_BUFFER_SIZE = 30> class CommandParser
   {
     // Array of commands we can match & dispatch. 
     CommandCallback m_Commands[MAX_COMMANDS];
@@ -33,7 +33,7 @@ namespace MLP
     void (*m_DefaultHandler)();
 
     // Buffer for data received.
-    char m_achBuffer[SERIAL_BUFFER_SIZE];
+    char m_achBuffer[CP_SERIAL_BUFFER_SIZE];
     unsigned m_uNextCharacter; 
     bool m_bOverflow;
     const char m_chStartOfMessage, m_chEndOfMessage;
@@ -97,7 +97,7 @@ namespace MLP
           if (!m_bOverflow)
           {
             m_achBuffer[m_uNextCharacter++] = chNext;
-            m_bOverflow = m_uNextCharacter >= (SERIAL_BUFFER_SIZE - 1);
+            m_bOverflow = m_uNextCharacter >= (CP_SERIAL_BUFFER_SIZE - 1);
           }
         }
       }
