@@ -71,7 +71,7 @@ namespace MLP
 
     void Process()
     {
-      while (Serial.available() > 0)
+      while (m_rSource.available() > 0)
       {
         char chNext = m_rSource.read();
         if (chNext == m_chStartOfMessage)
